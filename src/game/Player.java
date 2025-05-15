@@ -1,8 +1,7 @@
 package game;
-import menu.Menu;
+
 import javax.swing.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 public class Player implements KeyListener {
     private int playerX, playerY;
@@ -19,10 +18,10 @@ public class Player implements KeyListener {
     private void findPositions() {
         for (int i = 0; i < mazeStructure.length; i++) {
             for (int j = 0; j < mazeStructure[i].length; j++) {
-                if (mazeStructure[i][j] == 2) { // Player identifier
+                if (mazeStructure[i][j] == 2) { 
                     playerX = j;
                     playerY = i;
-                } else if (mazeStructure[i][j] == 3) { // Goal identifier
+                } else if (mazeStructure[i][j] == 3) { 
                     goalX = j;
                     goalY = i;
                 }
@@ -32,7 +31,6 @@ public class Player implements KeyListener {
 
     private void playerKeyPressed(KeyEvent evt) {
         int key = evt.getKeyCode();
-
         if (key == KeyEvent.VK_LEFT) movePlayer(-1, 0);
         if (key == KeyEvent.VK_RIGHT) movePlayer(1, 0);
         if (key == KeyEvent.VK_UP) movePlayer(0, -1);
@@ -42,39 +40,42 @@ public class Player implements KeyListener {
     public void movePlayer(int dx, int dy) {
         int newX = playerX + dx;
         int newY = playerY + dy;
-
         if (newX >= 0 && newX < mazeStructure[0].length &&
             newY >= 0 && newY < mazeStructure.length &&
-            mazeStructure[newY][newX] != 1) { // Prevent moving into walls
+            mazeStructure[newY][newX] != 1) {
 
-            mazeStructure[playerY][playerX] = 0; // Clear old position
-            mazeStructure[newY][newX] = 2;       // Update new position
+            mazeStructure[playerY][playerX] = 0;
+            mazeStructure[newY][newX] = 2;
             playerX = newX;
             playerY = newY;
 
-            level.notifyUI(); // Refresh UI after movement
-            checkWinCondition(); // Check if player reached the goal
+            level.notifyUI();
+            checkWinCondition();
         }
     }
 
     private void checkWinCondition() {
-        if (playerX == goalX && playerY == goalY) { // Check goal position
-            JOptionPane.showMessageDialog(level, "You Win!");
-            Menu lvl = new Menu();
-            lvl.setVisible(true);
-            level.dispose(); // Close the game once won
+        if (playerX == goalX && playerY == goalY) {
+            if (level instanceof TimedLevel) {
+                ((TimedLevel) level).playerWon();
+            } else if (level instanceof ChillLevel) {
+                ((ChillLevel) level).playerWon();
+            } else {
+                JOptionPane.showMessageDialog(level, "You Win!");
+                new ModeSelection();
+                level.dispose();
+            }
         }
     }
 
-    // Implement KeyListener methods
     @Override
-    public void keyPressed(KeyEvent evt) {
-        playerKeyPressed(evt);
-    }
-
+    public void keyPressed(KeyEvent evt) { playerKeyPressed(evt); }
     @Override
     public void keyReleased(KeyEvent evt) {}
-
     @Override
     public void keyTyped(KeyEvent evt) {}
+
+    // Getters for camera positioning.
+    public int getPlayerX() { return playerX; }
+    public int getPlayerY() { return playerY; }
 }
