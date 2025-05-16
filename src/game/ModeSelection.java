@@ -13,7 +13,7 @@ public class ModeSelection extends JFrame {
         setLocationRelativeTo(null);
         // Use a 3-row GridLayout: Timed Mode, Chill Mode, and Back.
         setLayout(new GridLayout(3, 1, 10, 10));
-
+        setResizable(false);
         JButton timedButton = new JButton("Timed Mode");
         JButton chillButton = new JButton("Chill Mode");
         JButton backButton = new JButton("Back");

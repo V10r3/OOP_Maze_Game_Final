@@ -11,7 +11,7 @@ public class ChillModeSelection extends JFrame {
         setSize(300, 250);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10,10));
-
+        setResizable(false);
         // Panel for maze size options
         JPanel optionsPanel = new JPanel(new GridLayout(3, 1));
         JRadioButton smallBtn = new JRadioButton("Small Maze");

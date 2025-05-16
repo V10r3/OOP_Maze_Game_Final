@@ -19,7 +19,7 @@ public class Level extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 300);
         setLocationRelativeTo(null);
-
+        setResizable(false);
         // Show a loading message while the maze is generated.
         JLabel loadingLabel = new JLabel("Generating maze, please wait...", SwingConstants.CENTER);
         add(loadingLabel, BorderLayout.CENTER);
