@@ -18,10 +18,10 @@ public class Player implements KeyListener {
     private void findPositions() {
         for (int i = 0; i < mazeStructure.length; i++) {
             for (int j = 0; j < mazeStructure[i].length; j++) {
-                if (mazeStructure[i][j] == 2) { 
+                if (mazeStructure[i][j] == 2) { // Player's starting position
                     playerX = j;
                     playerY = i;
-                } else if (mazeStructure[i][j] == 3) { 
+                } else if (mazeStructure[i][j] == 3) { // Goal position
                     goalX = j;
                     goalY = i;
                 }

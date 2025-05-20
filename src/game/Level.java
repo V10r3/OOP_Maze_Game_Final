@@ -35,22 +35,22 @@ public class Level extends JFrame {
             @Override
             protected void done() {
                 try {
-                    mazeStructure = get();
-                    // Set fixed positions: player start at (1,1) and goal at bottom-right.
-                    mazeStructure[1][1] = 2;
-                    mazeStructure[mazeSize - 2][mazeSize - 2] = 3;
+                    mazeStructure = get(); // Get the generated maze.
+
+                    // Dynamically place the player and goal in open cells.
+                    placePlayerAndGoal();
 
                     // Remove all components.
                     Container content = getContentPane();
                     content.removeAll();
 
-                    // Add the extra UI component (e.g., timer label) from the subclass.
+                    // Add the north component (if any) from a subclass.
                     JComponent northComp = getNorthComponent();
                     if (northComp != null) {
                         content.add(northComp, BorderLayout.NORTH);
                     }
 
-                    // Then add the game render panel.
+                    // Add the game render panel.
                     gameRender = new GameRender(Level.this, mazeStructure);
                     gameRender.setFocusable(true);
                     content.add(gameRender, BorderLayout.CENTER);
@@ -63,7 +63,7 @@ public class Level extends JFrame {
                     revalidate();
                     repaint();
 
-                    // **Automatically start the timer or stopwatch based on the mode.**
+                    // Automatically start the timer or stopwatch, if applicable.
                     if (Level.this instanceof TimedLevel) {
                         ((TimedLevel) Level.this).startTimer();
                     } else if (Level.this instanceof ChillLevel) {
@@ -141,11 +141,33 @@ public class Level extends JFrame {
         }
         return maze;
     }
-    
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            // For testing, launch a Level without extra UI – timer will not be visible.
-            new Level(41);
-        });
+    private void placePlayerAndGoal() {
+        Random rand = new Random();
+
+        // Place the player
+        while (true) {
+            int x = rand.nextInt(mazeStructure[0].length);
+            int y = rand.nextInt(mazeStructure.length);
+            if (mazeStructure[y][x] == 0) {  // Ensure that the cell is an open space.
+                mazeStructure[y][x] = 2;    // 2 indicates player position.
+                break;
+            }
+        }
+
+        // Place the goal.
+        while (true) {
+            int x = rand.nextInt(mazeStructure[0].length);
+            int y = rand.nextInt(mazeStructure.length);
+            if (mazeStructure[y][x] == 0) {  // Ensure that the cell is open.
+                mazeStructure[y][x] = 3;    // 3 indicates goal position.
+                break;
+            }
+        }
     }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> {
+//            // For testing, launch a Level without extra UI – timer will not be visible.
+//            new Level(41);
+//        });
+//    }
 }

@@ -69,29 +69,51 @@ public class GameRender extends JPanel {
         int endRow = Math.min(mazeStructure.length, (offsetY + viewHeight) / GRID_SIZE + 2);
         
         // Render the maze cells.
-        for (int row = startRow; row < endRow; row++) {
-            for (int col = startCol; col < endCol; col++) {
-                int cell = mazeStructure[row][col];
-                Color cellColor;
-                
-                if (cell == 1)
-                    cellColor = Color.BLACK;
-                else if (cell == 2)
-                    cellColor = Color.BLUE;  // Typically the start position
-                else if (cell == 3)
-                    cellColor = Color.RED;   // Typically the goal
-                else
-                    cellColor = Color.WHITE;
-                
-                g2d.setColor(cellColor);
-                g2d.fillRect(col * GRID_SIZE, row * GRID_SIZE, GRID_SIZE, GRID_SIZE);
-                
-                // Draw grid lines for clarity (optional)
-                g2d.setColor(Color.GRAY);
-                g2d.drawRect(col * GRID_SIZE, row * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+//        for (int row = startRow; row < endRow; row++) {
+//            for (int col = startCol; col < endCol; col++) {
+//                int cell = mazeStructure[row][col];
+//                Color cellColor;
+//                
+//                if (cell == 1)
+//                    cellColor = Color.BLACK;
+//                else if (cell == 2)
+//                    cellColor = Color.BLUE;  // Typically the start position
+//                else if (cell == 3)
+//                    cellColor = Color.RED;   // Typically the goal
+//                else
+//                    cellColor = Color.WHITE;
+//                
+//                g2d.setColor(cellColor);
+//                g2d.fillRect(col * GRID_SIZE, row * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+//                
+//                // Draw grid lines for clarity (optional)
+//                g2d.setColor(Color.GRAY);
+//                g2d.drawRect(col * GRID_SIZE, row * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+//            }
+//        }
+        // Render the maze cells.
+            for (int row = startRow; row < endRow; row++) {
+                for (int col = startCol; col < endCol; col++) {
+                    int cell = mazeStructure[row][col];
+                    Color cellColor;
+
+                    if (cell == 1)
+                        cellColor = Color.RED;
+                    else if (cell == 2)
+                        cellColor = Color.BLUE;  // Typically the start position
+                    else if (cell == 3)
+                        cellColor = Color.green;   // Typically the goal
+                    else
+                        cellColor = Color.WHITE;
+
+                    g2d.setColor(cellColor);
+                    g2d.fillRect(col * GRID_SIZE, row * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+
+                    // Optionally, leave out the following grid line drawing for a smoother look:
+                    // g2d.setColor(Color.GRAY);
+                    // g2d.drawRect(col * GRID_SIZE, row * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+                }
             }
-        }
-        
         // Draw the player.
         // If the player image successfully loaded, draw it scaled to the grid cell.
         if (playerImage != null) {

@@ -3,7 +3,7 @@ package game;
 public class DynamicTimer {
     private static double totalTime = 0;
     private static int gamesPlayed = 0;
-    private static final int DEFAULT_TIME = 90; // Default seconds if no data yet
+    private static final int DEFAULT_TIME = 300; // Default seconds if no data yet
 
     public static int getTimeLimit() {
         if (gamesPlayed == 0)
